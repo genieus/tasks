@@ -126,6 +126,7 @@ task Star {
         Array[String]? outSAMattrRGline
         String? outSAMunmapped = "Within KeepPairs"
         Int? limitBAMsortRAM
+        String? outSAMstrandField
 
         Int runThreadN = 4
         String? memory
@@ -134,7 +135,7 @@ task Star {
         String dockerImage = "quay.io/biocontainers/star:2.7.3a--0"
     }
 
-    # Use a margin of 30% index size. Real memory usage is ~30 GiB for a 27 GiB index. 
+    # Use a margin of 30% index size. Real memory usage is ~30 GiB for a 27 GiB index.
     Int memoryGb = 1 + ceil(size(indexFiles, "G") * 1.3)
     # For some reason doing above calculation inside a string does not work.
     # So we solve it with an optional memory string and using select_first
@@ -162,6 +163,7 @@ task Star {
         ~{"--outStd " + outStd} \
         ~{"--twopassMode " + twopassMode} \
         ~{"--limitBAMsortRAM " + limitBAMsortRAM} \
+        ~{"--outSAMstrandField " + outSAMstrandField} \
         ~{true="--outSAMattrRGline " false="" defined(outSAMattrRGline)} ~{sep=" , " outSAMattrRGline}
     }
 
