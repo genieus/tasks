@@ -21,11 +21,11 @@ task junctions_extract {
     -s ~{strand} \
     ~{"-t " + tag} \
     ~{bamfile} \
-    -o ~{bamfile}.junc
+    -o ~{basename(bamfile)}.junc
   }
 
   output {
-      File junc_file = "~{bamfile}.junc"
+      File junc_file = "~{basename(bamfile)}.junc"
   }
 
   runtime {
